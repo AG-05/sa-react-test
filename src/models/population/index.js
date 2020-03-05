@@ -32,12 +32,16 @@ class Population {
                 neighborsIndexs.map(x => {
                     neighborsIndexs.map(y => {
                         aliveNeighbours += this.currentPoppulation[i + x] && this.currentPoppulation[i + x][j + y] ? this.currentPoppulation[i + x][j + y] : 0;
+
+                        return null;
                     });
+
+                    return null;
                 });
                 aliveNeighbours -= this.currentPoppulation[i][j];
                 // Any live cell with fewer than two live neighbours (underpopulation) and more than three live neighbours (overcrowding) dies.
                 // Any live cell with two or three live neighbours lives on to the next generation.
-                if ((this.currentPoppulation[i][j] == 1)) { 
+                if ((this.currentPoppulation[i][j] === 1)) { 
                     newPopulation[i][j] = aliveNeighbours === 3 || aliveNeighbours === 2 ? 1 : 0; 
                 } else { // Any dead cell with exactly three live neighbours becomes a live cell (reproduction).
                     newPopulation[i][j] = aliveNeighbours === 3 ? 1 : 0; 
