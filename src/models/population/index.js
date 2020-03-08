@@ -1,22 +1,10 @@
 // @flow
 
 class Population {
-    height: number;
-    width: number;
     currentPoppulation: Array<Array<number>>;
 
-    constructor(width: number, height: number, source: (x: number, y: number) => number) {
-        this.width = width;
-        this.height = height;
-        this.currentPoppulation = [];
-        for (let i: number = 0; i < this.height; i++) 
-        {
-            this.currentPoppulation[i] = [];
-            for (let j: number = 0; j < this.width; j++) 
-            { 
-                this.currentPoppulation[i][j] = source(i, j);
-            } 
-        } 
+    constructor(population: Array<Array<number>>) {
+        this.currentPoppulation = population;
     }
 
     tick(): void {

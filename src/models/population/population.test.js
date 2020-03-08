@@ -1,10 +1,10 @@
 import Population from './index.js';
-import randomSource from './sources/index';
+import randomBuilder from './randomBuilder';
 
 describe('Successfully create population with random source', () => {
     const width = 3;
     const height = 3;
-    const population = new Population(width, height, randomSource);
+    const population = new Population(randomBuilder(width, height));
 
     it('Check size of grid', () => {
         expect(population.currentPoppulation.length).toBe(width);
@@ -23,15 +23,13 @@ describe('Successfully create population with random source', () => {
 });
 
 describe('Test rules of tick', () => {
-    const source = (sourcePopulation) => (x, y) => sourcePopulation[x][y];
-
     it('Check rule "Any live cell with fewer than two live neighbours dies (underpopulation)."', () => {
         const startPopulation = [
             [0, 1, 0, 0, 1],
             [0, 0, 0, 0, 0],
             [0, 0, 0, 1, 0],
         ];
-        const population = new Population(5, 3, source(startPopulation));
+        const population = new Population(startPopulation);
         population.tick();
 
         population.currentPoppulation.map(rows => {
@@ -51,7 +49,7 @@ describe('Test rules of tick', () => {
             [0, 1],
             [1, 4],
         ];
-        const population = new Population(5, 3, source(startPopulation));
+        const population = new Population(startPopulation);
         population.tick();
 
         nextAlivePoulationIndexes.map(indexes => {
@@ -71,7 +69,7 @@ describe('Test rules of tick', () => {
             [0, 0, 0, 0, 0],
             [1, 0, 0, 0, 1]
         ];
-        const population = new Population(5, 3, source(startPopulation));
+        const population = new Population(startPopulation);
         population.tick();
 
         population.currentPoppulation.map((row, index) => {
@@ -87,7 +85,7 @@ describe('Test rules of tick', () => {
         ];
 
         const nextAlivePoulationIndexes = [1, 3];
-        const population = new Population(5, 3, source(startPopulation));
+        const population = new Population(startPopulation);
         population.tick();
 
         expect(population.currentPoppulation[nextAlivePoulationIndexes[0]][nextAlivePoulationIndexes[1]]).toBe(1);
@@ -96,8 +94,6 @@ describe('Test rules of tick', () => {
 
 
 test('Successfully tick more than n times', () => {
-    const source = (sourcePopulation) => (x, y) => sourcePopulation[x][y];
-
     const startPopulation = [
         [0, 0, 0, 0, 0],
         [0, 0, 1, 0, 0],
@@ -114,7 +110,7 @@ test('Successfully tick more than n times', () => {
         [0, 0, 0, 0, 0],
     ];
 
-    const population = new Population(5, 5, source(startPopulation));
+    const population = new Population(startPopulation);
 
     for (let i = 1; i < 15; i++) {
         population.tick();

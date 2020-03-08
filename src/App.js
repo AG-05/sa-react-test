@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Board from './components/Board/index';
 import Population from './models/population/index';
-import randomSource from './models/population/sources/index';
+import randomBuilder from './models/population/randomBuilder';
 
 const useStyles = makeStyles({
   root: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const population = new Population(50, 50, randomSource);
+  const population = new Population(randomBuilder(50, 50));
 
   const [timerId, setTimerId] = useState();
 
@@ -55,7 +55,7 @@ function App() {
           Seeking Alpha React Test
         </Typography>
         <div className={classes.content}>
-          <Board items={population.currentPoppulation} width={population.width} height={population.height} />
+          <Board items={population.currentPoppulation} />
 
           <Button
             onClick={timerId ? stop : tick}

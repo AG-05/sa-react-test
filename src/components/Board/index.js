@@ -14,14 +14,14 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-    items: Array<Array<number>>,
-    width: number,
-    height: number
+    items: Array<Array<number>>
 };
 
 const Board = (props: Props) => {
     const cellSize: number = 15;
-    const classes = useStyles({ width: props.width * cellSize, height: props.height * cellSize });
+    const width: number = props.items.length;
+    const height: number = props.items[0].length;
+    const classes = useStyles({ width: width * cellSize, height: height * cellSize });
 
     return (
         <div className={classes.board}>
